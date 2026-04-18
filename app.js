@@ -148,6 +148,11 @@ app.post('/request', async (req, res) => {
     res.render('result', { result });
 });
 
-app.listen(PORT, () => {
-    console.log('Server running on http://localhost:' + PORT);
-});
+// only listen locally, Vercel handles this itself
+if (!process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log('Server running on http://localhost:' + PORT);
+    });
+}
+
+module.exports = app;
