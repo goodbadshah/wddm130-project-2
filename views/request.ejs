@@ -1,0 +1,119 @@
+<%- include('partials/header') %>
+
+<div class="page-hero">
+    <h1>Submit a Service Request</h1>
+    <p>Fill out the form below. All fields are required unless noted.</p>
+</div>
+
+<% if (errors.length > 0) { %>
+<div class="error-box">
+    <p><strong>Please fix the following errors:</strong></p>
+    <ul>
+        <% errors.forEach(function(err) { %>
+        <li><%= err %></li>
+        <% }) %>
+    </ul>
+</div>
+<% } %>
+
+<div class="content-card">
+    <form action="/request" method="POST" enctype="multipart/form-data">
+
+        <div class="form-section">
+            <h2>Student Information</h2>
+
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" name="fullName" value="<%= formData.fullName || '' %>" placeholder="e.g. Jane Smith">
+            </div>
+
+            <div class="form-group">
+                <label for="studentId">Student ID</label>
+                <input type="text" id="studentId" name="studentId" value="<%= formData.studentId || '' %>" placeholder="XXX-XXX-XXXX">
+                <span class="field-hint">Format: three digits, dash, three digits, dash, four digits</span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="text" id="email" name="email" value="<%= formData.email || '' %>" placeholder="you@example.com">
+            </div>
+
+            <div class="form-group">
+                <label for="program">Program Name</label>
+                <input type="text" id="program" name="program" value="<%= formData.program || '' %>" placeholder="e.g. Computer Programming">
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Request Details</h2>
+
+            <div class="form-group">
+                <label for="serviceType">Service Type</label>
+                <select id="serviceType" name="serviceType">
+                    <option value="">-- Select a service --</option>
+                    <option value="id_card" <%= formData.serviceType === 'id_card' ? 'selected' : '' %>>ID Card Replacement ($25.00)</option>
+                    <option value="enrollment_letter" <%= formData.serviceType === 'enrollment_letter' ? 'selected' : '' %>>Enrollment Letter ($10.00)</option>
+                    <option value="timetable_help" <%= formData.serviceType === 'timetable_help' ? 'selected' : '' %>>Timetable Help / Academic Support (Free)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Urgency Level</label>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" name="urgency" value="low" <%= formData.urgency === 'low' ? 'checked' : '' %>>
+                        Low — no immediate deadline
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="urgency" value="medium" <%= formData.urgency === 'medium' ? 'checked' : '' %>>
+                        Medium — needed within a week
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="urgency" value="high" <%= formData.urgency === 'high' ? 'checked' : '' %>>
+                        High — needed within 1–2 days
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Request Description</label>
+                <textarea id="description" name="description" rows="5" placeholder="Briefly describe your request and any relevant details..."><%= formData.description || '' %></textarea>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Contact &amp; Documentation</h2>
+
+            <div class="form-group">
+                <label>Preferred Contact Method</label>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" name="contactMethod" value="Email" <%= formData.contactMethod === 'Email' ? 'checked' : '' %>>
+                        Email
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="contactMethod" value="Phone" <%= formData.contactMethod === 'Phone' ? 'checked' : '' %>>
+                        Phone
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="contactMethod" value="In Person" <%= formData.contactMethod === 'In Person' ? 'checked' : '' %>>
+                        In Person
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="studentCard">Student Card Image (JPG or PNG)</label>
+                <input type="file" id="studentCard" name="studentCard" accept=".jpg,.jpeg,.png">
+                <span class="field-hint">Upload a clear photo of the front of your student card.</span>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Submit Request</button>
+        </div>
+
+    </form>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,79 @@
+<%- include('partials/header') %>
+
+<div class="page-hero">
+    <h1>Request Submitted</h1>
+    <p>Your service request has been received. Please save your request number for reference.</p>
+</div>
+
+<div class="content-card confirmation-header">
+    <div class="req-number">
+        <span class="req-label">Request Number</span>
+        <span class="req-value"><%= result.reqNum %></span>
+    </div>
+    <div class="req-meta">
+        <p>Submitted: <strong><%= result.submittedAt %></strong></p>
+        <p>Estimated Response: <strong><%= result.responseTime %></strong></p>
+        <p>Service Fee: <strong><%= result.fee %></strong></p>
+    </div>
+</div>
+
+<div class="content-card">
+    <h2>Status</h2>
+    <p class="status-msg"><%= result.statusMsg %></p>
+    <p>We will contact you by <strong><%= result.contactMethod %></strong>.</p>
+</div>
+
+<div class="content-card">
+    <h2>Request Summary</h2>
+    <p class="summary-text"><%= result.summary %></p>
+</div>
+
+<div class="content-card">
+    <h2>Submitted Information</h2>
+    <table class="info-table">
+        <tr>
+            <th>Full Name</th>
+            <td><%= result.fullName %></td>
+        </tr>
+        <tr>
+            <th>Student ID</th>
+            <td><%= result.studentId %></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td><%= result.email %></td>
+        </tr>
+        <tr>
+            <th>Program</th>
+            <td><%= result.program %></td>
+        </tr>
+        <tr>
+            <th>Service Requested</th>
+            <td><%= result.serviceType %></td>
+        </tr>
+        <tr>
+            <th>Urgency</th>
+            <td><%= result.urgency %></td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td><%= result.description %></td>
+        </tr>
+        <tr>
+            <th>Contact Method</th>
+            <td><%= result.contactMethod %></td>
+        </tr>
+    </table>
+</div>
+
+<div class="content-card">
+    <h2>Uploaded Student Card</h2>
+    <img src="<%= result.cardImage %>" alt="Uploaded student card" class="card-preview">
+</div>
+
+<div class="content-card">
+    <a href="/" class="btn-primary">Back to Home</a>
+    <a href="/request" class="btn-secondary">Submit Another Request</a>
+</div>
+
+<%- include('partials/footer') %>
