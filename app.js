@@ -11,7 +11,10 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(fileUpload());
+app.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: '/tmp/'
+}));
 
 // use /tmp/uploads so it works on both Vercel (read-only fs) and locally
 const uploadsDir = process.env.VERCEL ? '/tmp/uploads' : path.join(__dirname, 'public', 'uploads');
