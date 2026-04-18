@@ -13,11 +13,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload());
 
-// make sure uploads folder exists
-const uploadsDir = path.join(__dirname, 'public', 'uploads');
+// use /tmp/uploads so it works on both Vercel (read-only fs) and locally
+const uploadsDir = process.env.VERCEL ? '/tmp/uploads' : path.join(__dirname, 'public', 'uploads');
 if (!fs.existsSync(uploadsDir)) {
     fs.mkdirSync(uploadsDir, { recursive: true });
 }
+
+// serve uploaded files from /tmp when running on Vercel
+app.get('/uploads/:filename', (req, res) => {
+    const filePath = path.join(uploadsDir, req.params.filename);
+    if (!fs.existsSync(filePath)) return res.status(404).send('Not found');
+    res.sendFile(filePath);
+});
 
 app.get('/', (req, res) => {
     res.render('home');
